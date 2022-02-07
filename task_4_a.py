@@ -86,3 +86,30 @@ for i in ans2:
     movies_name.append(i['data']['title'])
 print(movies_name)
 
+
+def task_three(collections, year):
+    pipeline = [
+        {"$project": {"_id": 0, "date": {"$toDate": {"$convert": {"input": "$date", "to": "long"}}}}},
+        {"$group": {
+            "_id": {
+                "year": {"$year": "$date"},
+                "month": {"$month": "$date"}
+            },
+            "total_person": {"$sum": 1}}
+        },
+        {"$match": {"_id.year": {"$eq": year}}},
+        {"$sort": {"_id.month": 1}}
+    ]
+    result = collections.aggregate(pipeline)
+    li = []
+    for i in result:
+        li.append(i);
+    return li
+
+
+# Given a year find the total number of comments created each month in that year
+print("All comments with given year i.e. 2000")
+year = "2000"
+taskThree = task_three(comments, 2000)
+print(taskThree)
+
