@@ -166,6 +166,7 @@ def task_eleven(n, movies, genres):
         res.append(i)
     return res
 
+
 def queries(movies):
     n = int(input("Enter the value for N: "))
     taskOne = task_one(n, movies)
